@@ -22,7 +22,7 @@ WHERE artist = 'Pink Floyd';
 -- 4b.
 SELECT artist, name AS 'Album', release_date AS 'Release Date'
 FROM albums
-WHERE name = "Sgt. Pepper's Lonely Hearts Club Band"
+WHERE name = "Sgt. Pepper's Lonely Hearts Club Band";
 
 -- 4c.
 SELECT artist, name AS 'Album', genre AS 'Genre'
