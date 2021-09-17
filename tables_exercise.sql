@@ -11,7 +11,7 @@ DESCRIBE employees;
 
 -- What different data types are present? int, date, varchar, enum
 
--- Which table(s) do I think contain numeric type column? salaries
+-- Which table(s) do I think contain numeric type column? All of them, due to primary key
 
 -- Which table(s) do I think contain a string type column? departments, dept_emp, dept_manager, employees, salaries, titles
 
