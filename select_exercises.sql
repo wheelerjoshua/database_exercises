@@ -1,6 +1,11 @@
 USE albums_db;
 
 -- 3a. 31 rows
+SELECT id
+FROM albums
+ORDER BY id DESC
+LIMIT 1;
+
 -- 3b. 23
 SELECT DISTINCT artist
 FROM `albums`;
@@ -43,3 +48,4 @@ WHERE sales < 20;
 SELECT name AS 'Album', genre AS 'Genre'
 FROM albums
 WHERE genre = 'Rock';
+-- WHERE genre LIKE '%rock%'; will yield all sub-genres of rock
