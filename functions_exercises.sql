@@ -20,6 +20,7 @@ SELECT CONCAT('$', MIN(salary)) AS 'Smallest Salary', CONCAT('$', MAX(salary)) A
 FROM salaries;
 
 -- 6. 
-SELECT LOWER(CONCAT(SUBSTR(first_name, 1,1), SUBSTR(last_name, 1,4), "_", LPAD(MONTH(birth_date), 2, 0), SUBSTR(YEAR(birth_date), 3, 2))) AS username, first_name, last_name, birth_date
+-- SELECT LOWER(CONCAT(SUBSTR(first_name, 1,1), SUBSTR(last_name, 1,4), "_", LPAD(MONTH(birth_date), 2, 0), SUBSTR(YEAR(birth_date), 3, 2))) AS username, first_name, last_name, birth_date
+SELECT LOWER(CONCAT(SUBSTR(first_name, 1,1), SUBSTR(last_name, 1,4), "_", SUBSTR(birth_date, 9, 2), SUBSTR(YEAR(birth_date), 3, 2))) AS username, first_name, last_name, birth_date
 FROM employees
 LIMIT 10;
