@@ -8,7 +8,7 @@ FROM titles;
 -- 3. 
 SELECT last_name
 FROM employees 
-WHERE last_name LIKE "E%e"
+WHERE last_name LIKE "e%e"
 GROUP BY last_name;
 
 -- 4. 
@@ -63,11 +63,12 @@ GROUP BY username
 HAVING amount > 1
 ORDER BY amount DESC;
 
--- 9. 
+-- 9. Find the historic average salary for all employees. Now determine the current average salary.
 
 -- Historic
 SELECT AVG(salary)
 FROM salaries;
+-- My solution included the following code to filter past salaries not including current date as a different interpretation to 'historic'
 -- WHERE from_date < NOW()
 
 -- Current 
