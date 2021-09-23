@@ -185,3 +185,12 @@ JOIN dept_emp using(emp_no)
 JOIN departments using(dept_no)) as e ON e.dept_name = max.dept_name
 ;								
 */
+
+
+-- Extra bonus.
+SELECT dept_name, ROUND(AVG(salary)) as average_salary
+FROM salaries s
+JOIN dept_emp de using(emp_no)
+JOIN departments d using(dept_no)
+GROUP BY dept_name
+ORDER BY average_salary DESC;
