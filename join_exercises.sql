@@ -9,7 +9,7 @@ JOIN roles;
 -- 2. 
 SELECT *
 FROM users
-JOIN roles oN users.role_id = roles.id;
+JOIN roles ON users.role_id = roles.id;
 -- There are 4 rows
 
 SELECT *
@@ -57,7 +57,7 @@ SELECT title AS Title, COUNT(*) AS Count
 FROM titles
 JOIN dept_emp USING(emp_no)
 JOIN departments USING(dept_no)
-WHERE titles.to_date > now() AND dept_name = 'Customer Service'
+WHERE titles.to_date > now() AND dept_emp.to_date > now() AND dept_name = 'Customer Service'
 GROUP BY title
 ORDER BY title;
 
@@ -85,14 +85,14 @@ SELECT dept_name, AVG(salary) AS average_salary
 FROM departments
 JOIN dept_emp USING(dept_no)
 JOIN salaries USING(emp_no)
-WHERE salaries.to_date > now()
+WHERE salaries.to_date > now() AND dept_emp.to_date > now()
 GROUP BY dept_name
 ORDER BY average_salary DESC
 LIMIT 1;
 -- Sales	88842.1590
 
 -- 8. 
-SELECT first_name, last_name
+SELECT first_name, last_name, salary
 FROM employees
 JOIN salaries USING(emp_no)
 JOIN dept_emp USING(emp_no)
@@ -100,6 +100,7 @@ JOIN departments USING(dept_no)
 WHERE dept_name LIKE 'Marketing' AND salaries.to_date > now()
 ORDER BY salary DESC
 LIMIT 1;
+-- Akemi Warwick	145128
 
 -- 9. 
 SELECT first_name, last_name, salary, dept_name
@@ -112,15 +113,6 @@ ORDER BY salary DESC
 LIMIT 1;
 
 -- 10. 
-/* ORIGINAL CODE
-SELECT DISTINCT CONCAT(first_name, ' ', last_name) AS 'Employee Name', dept_name,
-FROM employees
-JOIN dept_emp USING(emp_no)
-JOIN departments USING(dept_no)
-JOIN dept_manager USING(dept_no)
-WHERE dept_emp.to_date > now();
-*/ 
-
 /* Instructor assisted solution*/
 SELECT CONCAT(e.first_name, ' ', e.last_name) AS 'Employee Name', 
        dept_name,
@@ -134,9 +126,20 @@ JOIN employees as managers ON managers.emp_no = d_m.emp_no
 in our selection. */
 WHERE d_e.to_date > now() AND d_m.to_date > now();
 
+
+/* ORIGINAL CODE
+SELECT DISTINCT CONCAT(first_name, ' ', last_name) AS 'Employee Name', dept_name,
+FROM employees
+JOIN dept_emp USING(emp_no)
+JOIN departments USING(dept_no)
+JOIN dept_manager USING(dept_no)
+WHERE dept_emp.to_date > now();
+*/ 
+
 -- 11.
 /* Source used to assist in solution was a comment by henry606 on this page
 https://leetcode.com/problems/department-highest-salary/solution/ */
+
 SELECT CONCAT(first_name, ' ', last_name) as employee_name, d.dept_name, s.salary
 FROM employees AS e
 JOIN salaries s USING(emp_no)
