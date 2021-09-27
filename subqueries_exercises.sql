@@ -11,18 +11,18 @@ WHERE hire_date IN
 	WHERE emp_no = 101010
 	)
 AND to_date > CURDATE();
+-- 55
 
 -- 2.
-SELECT first_name, last_name, title
+SELECT DISTINCT title
 FROM titles
-JOIN employees USING(emp_no)
 WHERE emp_no IN 
 	(
 	SELECT emp_no
 	FROM employees
-	WHERE first_name LIKE 'Aamod'
-	)
-AND to_date > CURDATE();
+	JOIN dept_emp USING(emp_no)
+	WHERE first_name LIKE 'Aamod' and to_date > now()
+	);
 
 -- 3. 
 SELECT COUNT(*)
@@ -35,7 +35,7 @@ WHERE emp_no NOT IN
 	);
 -- 59900
 
--- Why won't this work
+-- Why won't this work? There are multiple per emp_no in the past, so we cannot use to_date < now()
 /*
 SELECT *
 FROM employees
@@ -59,7 +59,7 @@ WHERE emp_no IN
 	FROM dept_manager
 	WHERE to_date > CURDATE()
 	)
-AND gender LIKE 'F';
+AND gender = 'F';
 -- Isamu Legleitner, Karsten Sigstam, Leon DasSarma, Hilary Kambil
 
 -- 5.
@@ -70,12 +70,35 @@ WHERE salary >
 	(
 	SELECT AVG(salary)
 	FROM salaries
-	WHERE to_date < CURDATE()
 	)
 AND to_date > CURDATE();
--- 158675
+-- 154543
 
 -- 6. 
+SELECT COUNT(salary)
+FROM salaries
+WHERE to_date > now()
+AND salary > (
+	(select max(salary) from salaries where to_date > now())
+				- (select std(salary) from salaries where to_date > now())
+	);
+
+
+SELECT (SELECT COUNT(salary)
+		FROM salaries
+		WHERE to_date > now()
+		AND salary > (
+			(select max(salary) from salaries where to_date > now())
+			- (select std(salary) from salaries where to_date > now())
+			)) 
+			/ 
+			(SELECT COUNT(*)
+			FROM salaries
+			WHERE to_date > now()) 
+			* 100;
+
+
+/* Original answer 
 SELECT COUNT(*) as salaries_within_one, concat(cast(78/240124*100 as char),'%') as percentage_of_all
 FROM salaries
 WHERE to_date > CURDATE()
@@ -83,7 +106,7 @@ AND (salary - (SELECT MAX(salary) FROM salaries))
 	/
 	(SELECT stddev(salary) FROM salaries) BETWEEN -1 AND 1;
 -- 78, 0.0325%
-
+*/
 
 
 -- BONUS
@@ -125,5 +148,5 @@ WHERE dept_no IN
 		SELECT MAX(salary)
 		FROM salaries
 		)
-	)
+	);
 -- Sales
