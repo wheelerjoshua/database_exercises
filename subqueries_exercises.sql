@@ -27,6 +27,19 @@ AND to_date > CURDATE();
 -- 3. 
 SELECT COUNT(*)
 FROM employees
+WHERE emp_no NOT IN
+	(
+	SELECT emp_no
+	FROM dept_emp 
+	WHERE to_date > CURDATE()
+	);
+-- 59900
+
+-- Why won't this work
+/*
+SELECT *
+FROM employees
+join dept_emp using(emp_no)
 WHERE emp_no IN 
 	(
 	SELECT emp_no
@@ -34,6 +47,8 @@ WHERE emp_no IN
 	WHERE to_date < CURDATE()
 	);
 -- 85108
+*/
+
 
 -- 4. 
 SELECT CONCAT(first_name, ' ', last_name) as 'Female Managers'
