@@ -70,8 +70,10 @@ WHERE salary >
 	(
 	SELECT AVG(salary)
 	FROM salaries
+	WHERE to_date < CURDATE()
 	)
 AND to_date > CURDATE();
+-- 158675
 
 -- 6. 
 SELECT COUNT(*) as salaries_within_one, concat(cast(78/240124*100 as char),'%') as percentage_of_all
