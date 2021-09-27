@@ -67,6 +67,8 @@ AND (salary - (SELECT MAX(salary) FROM salaries))
 	(SELECT stddev(salary) FROM salaries) BETWEEN -1 AND 1;
 -- 78, 0.0325%
 
+
+
 -- BONUS
 -- 1.
 SELECT dept_name as 'Departments with Female Mangers'
@@ -78,6 +80,7 @@ WHERE dept_no IN
 	JOIN employees USING(emp_no)
 	WHERE gender LIKE 'F'
 	);
+-- Customer Service, Development, Finance, Human Resources, Production, Quality Management, Research
 	
 -- 2. 
 SELECT first_name, last_name, salary
@@ -88,6 +91,8 @@ WHERE salary IN
 	SELECT MAX(salary)
 	FROM salaries
 	);
+-- Tokuyasu Pesch, 158220
+	
 	
 -- 3.
 SELECT dept_name
@@ -104,3 +109,4 @@ WHERE dept_no IN
 		FROM salaries
 		)
 	)
+-- Sales
