@@ -10,7 +10,8 @@ JOIN employees.departments USING(dept_no)
 LIMIT 100
 );
 
-ALTER TABLE employees_with_departments ADD full_name VARCHAR(30);
+-- DESCRIBE employees.employees;
+ALTER TABLE employees_with_departments ADD full_name VARCHAR(31);
 
 UPDATE employees_with_departments
 SET full_name = CONCAT(first_name, ' ', last_name);
@@ -39,6 +40,7 @@ FROM sakila.payment
 /* Change column without adding or removing */
 ALTER TABLE payment MODIFY amount FLOAT;
 UPDATE payment SET amount = amount * 100;
+ALTER TABLE payment MODIFY amount INT;
 
 /* Use separate column to achieve answer */
 ALTER TABLE payment ADD amount_in_cents INT;
@@ -47,6 +49,14 @@ ALTER TABLE payment DROP amount;
 ALTER TABLE payment RENAME COLUMN amount_in_cents TO amount;
 
 SELECT * from payment;
+
+/* Create table with transformation completed.*/
+CREATE TEMPORARY TABLE hopper_1544.payment as(
+select amount * 100 as amount
+from sakila.payment);
+
+ALTER TABLE payment MODIFY amount INT;
+SELECT * FROM payment;
 
 -- To reset table
 DROP TABLE payment;
