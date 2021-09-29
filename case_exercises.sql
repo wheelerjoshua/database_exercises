@@ -11,9 +11,18 @@ FROM dept_emp;
 -- 2.
 SELECT CONCAT(first_name, ' ', last_name) as employee_name, 
 	CASE
-	WHEN last_name >= 'A' and last_name < 'I' THEN 'A-H'
-	WHEN last_name >= 'I' and last_name < 'R' THEN 'I-Q'
-	WHEN last_name >= 'R' and last_name <= 'Z' THEN 'R-Z'
+	WHEN last_name > 'A' and last_name < 'I' THEN 'A-H'
+	WHEN last_name > 'I' and last_name < 'R' THEN 'I-Q'
+	WHEN last_name > 'R' and last_name <= 'Z' THEN 'R-Z'
+	ELSE 'R-Z'
+	END AS alpha_group
+from employees;
+
+-- Alternate solution with less code
+SELECT CONCAT(first_name, ' ', last_name) as employee_name, 
+	CASE
+	WHEN last_name < 'I' THEN 'A-H'
+	WHEN last_name < 'R' THEN 'I-Q'
 	ELSE 'R-Z'
 	END AS alpha_group
 from employees;
@@ -23,6 +32,7 @@ SELECT
 	COUNT(CASE WHEN birth_date like '195%' THEN birth_date ELSE NULL END) as '1950s',
 	COUNT(CASE WHEN birth_date like '196%' THEN birth_date ELSE NULL END) as '1960s'
 FROM employees;
+
 
 -- BONUS
 -- Average salary for each department
